@@ -93,21 +93,29 @@ func NewLRPStartRequestFromModel(d *DesiredLRP, indices ...int) LRPStartRequest 
 		volumeDrivers = append(volumeDrivers, volumeMount.Driver)
 	}
 
+	resource := NewResource(d.MemoryMb, d.DiskMb, d.MaxPids)
+	resource.GPULimit = d.GpuLimit
+	resource.GPUType = d.GpuType
+
 	return NewLRPStartRequest(
 		d.ProcessGuid,
 		d.Domain,
 		indices,
-		NewResource(d.MemoryMb, d.DiskMb, d.MaxPids),
+		resource,
 		NewPlacementConstraint(d.RootFs, d.PlacementTags, volumeDrivers),
 	)
 }
 
 func NewLRPStartRequestFromSchedulingInfo(s *DesiredLRPSchedulingInfo, indices ...int) LRPStartRequest {
+	resource := NewResource(s.MemoryMb, s.DiskMb, s.MaxPids)
+	resource.GPULimit = s.GpuLimit
+	resource.GPUType = s.GpuType
+
 	return NewLRPStartRequest(
 		s.ProcessGuid,
 		s.Domain,
 		indices,
-		NewResource(s.MemoryMb, s.DiskMb, s.MaxPids),
+		resource,
 		NewPlacementConstraint(s.RootFs, s.PlacementTags, s.VolumePlacement.DriverNames),
 	)
 }
