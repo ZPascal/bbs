@@ -49,6 +49,11 @@ type Resource struct {
 	MemoryMB int32
 	DiskMB   int32
 	MaxPids  int32
+
+	// GPULimit is the number of GPUs requested; 0 means no GPU required.
+	// GPUType is the requested vendor/type ("nvidia", "amd", or "" for any).
+	GPULimit int32
+	GPUType  string
 }
 
 func NewResource(memoryMb, diskMb int32, maxPids int32) Resource {
@@ -212,6 +217,14 @@ func (i InsufficientResourcesError) Error() string {
 	return fmt.Sprintf("insufficient resources: %s", strings.Join(keys, ", "))
 }
 
+// GPUCapacity describes the GPU resources of a Diego cell, as advertised
+// in CellState. A zero-value GPUCapacity means the cell has no GPUs.
+type GPUCapacity struct {
+	Total int
+	Free  int
+	Type  string
+}
+
 type CellState struct {
 	RepURL                  string `json:"rep_url"`
 	CellID                  string `json:"cell_id"`
@@ -228,6 +241,7 @@ type CellState struct {
 	PlacementTags           []string
 	OptionalPlacementTags   []string
 	ProxyMemoryAllocationMB int
+	GPUCapacity             GPUCapacity
 }
 
 func NewCellState(
@@ -289,6 +303,14 @@ func (c *CellState) ResourceMatch(res *Resource) error {
 	}
 	if c.AvailableResources.Containers < 1 {
 		problems["containers"] = struct{}{}
+	}
+	if res.GPULimit > 0 {
+		if c.GPUCapacity.Free < int(res.GPULimit) {
+			problems["gpu"] = struct{}{}
+		}
+		if res.GPUType != "" && c.GPUCapacity.Type != res.GPUType {
+			problems["gpu_type"] = struct{}{}
+		}
 	}
 	if len(problems) == 0 {
 		return nil

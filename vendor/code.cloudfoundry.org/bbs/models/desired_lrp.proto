@@ -111,6 +111,12 @@ message DesiredLRPResource {
   int32 disk_mb = 2 [(gogoproto.jsontag) = "disk_mb"];
   string root_fs = 3 [(gogoproto.jsontag) = "rootfs"];
   int32 max_pids = 4 [(gogoproto.jsontag) = "max_pids"];
+
+  // GPU resources requested. gpu_limit = 0 means no GPU required.
+  // gpu_type is "nvidia", "amd", or "" (any type acceptable).
+  int32 gpu_limit = 5 [(gogoproto.jsontag) = "gpu_limit,omitempty"];
+  string gpu_type = 6 [(gogoproto.jsontag) = "gpu_type,omitempty"];
+  repeated uint32 gpu_indices = 7 [(gogoproto.jsontag) = "gpu_indices,omitempty"];
 }
 
 message DesiredLRP {
@@ -165,4 +171,9 @@ message DesiredLRP {
     RECREATE = 1 [(gogoproto.enumvalue_customname) = "UpdateStrategyRecreate"];
   }
   UpdateStrategy update_strategy = 39 [(gogoproto.jsontag) = "update_strategy"];
+
+  // GPU resources requested. Mirrors DesiredLRPResource's gpu_* fields.
+  int32 gpu_limit = 40 [(gogoproto.jsontag) = "gpu_limit,omitempty"];
+  string gpu_type = 41 [(gogoproto.jsontag) = "gpu_type,omitempty"];
+  repeated uint32 gpu_indices = 42 [(gogoproto.jsontag) = "gpu_indices,omitempty"];
 }

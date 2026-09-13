@@ -63,3 +63,7 @@ require (
 
 // pin ifrit until https://github.com/tedsuo/ifrit/pull/48 is merged
 replace github.com/tedsuo/ifrit => github.com/tedsuo/ifrit v0.0.0-20260418191334-846868129986
+
+// use the in-tree models module (has GPU scheduling fields from the gpu-poc branch)
+// instead of the unmodified upstream release from the proxy.
+replace code.cloudfoundry.org/bbs/models => ./models

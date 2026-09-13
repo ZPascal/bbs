@@ -596,8 +596,6 @@ code.cloudfoundry.org/bbs/encryption v1.12.0 h1:PHyUUHTn5vtvCQDoXRYZOs7zYCw10dE/
 code.cloudfoundry.org/bbs/encryption v1.12.0/go.mod h1:2PIO4e1NTXvPxKnGJ9YBUUZX3FLNVVEIjNlYj2ztbgo=
 code.cloudfoundry.org/bbs/format v1.11.0 h1:Y77oGP+VH9oYpaVQn1INwxSjfB1ayGKv0fgS9Dap9RI=
 code.cloudfoundry.org/bbs/format v1.11.0/go.mod h1:I4+i8HlgOKjM+mU78eASGxDpWCCqzPqef7QtGPa4/5g=
-code.cloudfoundry.org/bbs/models v1.13.0 h1:rFnXwBUWT1PqeNI6/S/2RmIDa143apLu5KYzjj6cCCc=
-code.cloudfoundry.org/bbs/models v1.13.0/go.mod h1:58T80LLEoBX4Z76TbQIDr93xSTx5soZw1JJM7Mht1E4=
 code.cloudfoundry.org/cfhttp/v2 v2.94.0 h1:Ucka/FRAXCN5tgYbNpgqasZYs4C9ziintkLAKjIppbg=
 code.cloudfoundry.org/cfhttp/v2 v2.94.0/go.mod h1:q4ZmifScc5baTNZLHxDEGkxAr0oyxqJNJf94SgytFMc=
 code.cloudfoundry.org/clock v1.87.0 h1:7TzMbR9GnHpz0qhFeUyfXUbIXnuBME22nxVTosOhLL4=

@@ -5,7 +5,7 @@ code.cloudfoundry.org/bbs/encryption/encryptionfakes
 # code.cloudfoundry.org/bbs/format v1.11.0
 ## explicit; go 1.26.2
 code.cloudfoundry.org/bbs/format
-# code.cloudfoundry.org/bbs/models v1.13.0
+# code.cloudfoundry.org/bbs/models v1.13.0 => ./models
 ## explicit; go 1.26.2
 code.cloudfoundry.org/bbs/models
 code.cloudfoundry.org/bbs/models/test/matchers
@@ -421,3 +421,4 @@ google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/timestamppb
 # github.com/tedsuo/ifrit => github.com/tedsuo/ifrit v0.0.0-20260418191334-846868129986
+# code.cloudfoundry.org/bbs/models => ./models
