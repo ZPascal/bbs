@@ -223,7 +223,11 @@ func (d *DesiredLRP) DesiredLRPKey() DesiredLRPKey {
 }
 
 func (d *DesiredLRP) DesiredLRPResource() DesiredLRPResource {
-	return NewDesiredLRPResource(d.MemoryMb, d.DiskMb, d.MaxPids, d.RootFs)
+	resource := NewDesiredLRPResource(d.MemoryMb, d.DiskMb, d.MaxPids, d.RootFs)
+	resource.GpuLimit = d.GpuLimit
+	resource.GpuType = d.GpuType
+	resource.GpuIndices = d.GpuIndices
+	return resource
 }
 
 func (d *DesiredLRP) DesiredLRPSchedulingInfo() DesiredLRPSchedulingInfo {

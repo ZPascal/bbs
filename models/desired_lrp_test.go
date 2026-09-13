@@ -1869,3 +1869,36 @@ var _ = Describe("DesiredLRPFilter", func() {
 		Expect(filter.AppGuids).To(Equal([]string{"app-guid-1", "app-guid-2"}))
 	})
 })
+
+var _ = Describe("DesiredLRP GPU fields", func() {
+	Describe("DesiredLRPResource", func() {
+		It("carries the GPU request through from DesiredLRP", func() {
+			d := &models.DesiredLRP{
+				MemoryMb:   128,
+				DiskMb:     512,
+				MaxPids:    100,
+				RootFs:     "preloaded:stack",
+				GpuLimit:   1,
+				GpuType:    "nvidia",
+				GpuIndices: []uint32{0},
+			}
+
+			resource := d.DesiredLRPResource()
+
+			Expect(resource.MemoryMb).To(Equal(int32(128)))
+			Expect(resource.GpuLimit).To(Equal(int32(1)))
+			Expect(resource.GpuType).To(Equal("nvidia"))
+			Expect(resource.GpuIndices).To(Equal([]uint32{0}))
+		})
+
+		It("defaults to no GPU when unset", func() {
+			d := &models.DesiredLRP{MemoryMb: 128, DiskMb: 512, MaxPids: 100}
+
+			resource := d.DesiredLRPResource()
+
+			Expect(resource.GpuLimit).To(Equal(int32(0)))
+			Expect(resource.GpuType).To(Equal(""))
+			Expect(resource.GpuIndices).To(BeEmpty())
+		})
+	})
+})
