@@ -28,6 +28,35 @@ var _ = Describe("DesiredLRPDB", func() {
 			Expect(desiredLRP).To(Equal(expectedDesiredLRP))
 		})
 
+		Context("when the desired lrp requests a GPU", func() {
+			BeforeEach(func() {
+				expectedDesiredLRP.GpuLimit = 1
+				expectedDesiredLRP.GpuType = "nvidia"
+			})
+
+			It("persists the GPU request and survives a re-read from the database", func() {
+				err := sqlDB.DesireLRP(ctx, logger, expectedDesiredLRP)
+				Expect(err).NotTo(HaveOccurred())
+
+				desiredLRP, err := sqlDB.DesiredLRPByProcessGuid(ctx, logger, "the-guid")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(desiredLRP.GpuLimit).To(Equal(int32(1)))
+				Expect(desiredLRP.GpuType).To(Equal("nvidia"))
+
+				schedulingInfos, err := sqlDB.DesiredLRPSchedulingInfos(ctx, logger, models.DesiredLRPFilter{})
+				Expect(err).NotTo(HaveOccurred())
+				var found *models.DesiredLRPSchedulingInfo
+				for _, si := range schedulingInfos {
+					if si.ProcessGuid == "the-guid" {
+						found = si
+					}
+				}
+				Expect(found).NotTo(BeNil())
+				Expect(found.GpuLimit).To(Equal(int32(1)))
+				Expect(found.GpuType).To(Equal("nvidia"))
+			})
+		})
+
 		Context("when the process_guid is already taken", func() {
 			BeforeEach(func() {
 				err := sqlDB.DesireLRP(ctx, logger, expectedDesiredLRP)

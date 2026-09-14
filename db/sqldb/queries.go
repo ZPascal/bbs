@@ -46,6 +46,8 @@ var (
 		desiredLRPsTable + ".modification_tag_epoch",
 		desiredLRPsTable + ".modification_tag_index",
 		desiredLRPsTable + ".placement_tags",
+		desiredLRPsTable + ".gpu_limit",
+		desiredLRPsTable + ".gpu_type",
 	}
 
 	desiredLRPColumns = append(schedulingInfoColumns,
