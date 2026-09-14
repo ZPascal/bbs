@@ -80,6 +80,8 @@ func NewDesiredLRP(schedInfo DesiredLRPSchedulingInfo, runInfo DesiredLRPRunInfo
 		VolumeMounts:                  runInfo.VolumeMounts,
 		Network:                       runInfo.Network,
 		PlacementTags:                 schedInfo.PlacementTags,
+		GpuLimit:                      schedInfo.GpuLimit,
+		GpuType:                       schedInfo.GpuType,
 		CertificateProperties:         runInfo.CertificateProperties,
 		ImageUsername:                 runInfo.ImageUsername,
 		ImagePassword:                 runInfo.ImagePassword,

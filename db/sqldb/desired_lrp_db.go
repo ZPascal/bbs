@@ -82,6 +82,8 @@ func (db *SQLDB) DesireLRP(ctx context.Context, logger lager.Logger, desiredLRP 
 				"placement_tags":         placementTagData,
 				"metric_tags":            metricTagsData,
 				"update_strategy":        desiredLRP.UpdateStrategy,
+				"gpu_limit":              desiredLRP.GpuLimit,
+				"gpu_type":               desiredLRP.GpuType,
 			},
 		)
 		if err != nil {
@@ -463,6 +465,8 @@ func (db *SQLDB) fetchDesiredLRPSchedulingInfoAndMore(logger lager.Logger, scann
 		&schedulingInfo.ModificationTag.Epoch,
 		&schedulingInfo.ModificationTag.Index,
 		&placementTagData,
+		&schedulingInfo.GpuLimit,
+		&schedulingInfo.GpuType,
 	}
 	values = append(values, dest...)
 
